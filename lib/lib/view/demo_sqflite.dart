@@ -9,6 +9,8 @@ class Demo_Sqflite extends StatefulWidget {
 
 // ignore: camel_case_types
 class _Demo_SqfliteState extends State<Demo_Sqflite> {
+  int count = 0;
+  var list;
   final dbHelper=DatabaseHelper.instance;
   final name = TextEditingController();
   final age = TextEditingController();
@@ -267,28 +269,36 @@ class _Demo_SqfliteState extends State<Demo_Sqflite> {
                         ),
                       ],
                     ),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Container(
-                            child: ListView(
-                              children: [
-                                Card(
-                                  child: ListTile(
-                                    leading: Text("Image"),
-                                    title: Text("name"),
-                                    subtitle: Text("age"),
-                                    trailing: Text("delete"),
+                    Container(
+                      height: 200,
+                      child: ListView.builder(
+                        itemCount: count,
+                          itemBuilder: (BuildContext context, int position){
+                          return Row(
+                            children: [
+                              Expanded(
+                                child: Container(
+                                  child: ListView(
+                                    children: [
+                                      Card(
+                                        child: ListTile(
+                                          leading: Text("icon"),
+                                          title: Text("name"),
+                                          subtitle: Text("age"),
+                                          trailing: Text("delete"),
+                                        ),
+                                      )
+                                    ],
                                   ),
-                                )
-                              ],
-                            ),
-                            height: 100,
-                            width: 200,
-                          ),
-                        )
-                      ],
-                    ),
+                                  height: 100,
+                                  width: 200,
+                                ),
+                              )
+                            ],
+                          );
+                          }
+                      ),
+                    )
                   ],
                 ),
               ),
@@ -310,7 +320,7 @@ class _Demo_SqfliteState extends State<Demo_Sqflite> {
   void _query() async{
     final allRows = await dbHelper.queryAllRows();
     print('query all rows:');
-    allRows.forEach((row) => print(row));
+    allRows.forEach((row) => list);
   }
 
   void _update() async{
